@@ -26,19 +26,35 @@ class WeatherController extends Controller
             return response()->json(json_decode($weather->data));
         }
 
-        // Fetch weather data from OpenWeatherMap API
-        $response = Http::get('https://api.openweathermap.org/data/2.5/forecast', [
+        // Fetch coordinates from OpenWeatherMap Geocoding API
+        $geoResponse = Http::withOptions(['verify' => false])->get('http://api.openweathermap.org/geo/1.0/direct', [
             'q' => $location,
+            'limit' => 1,
+            'appid' => $this->apiKey
+        ]);
+
+        if ($geoResponse->failed() || empty($geoResponse->json())) {
+            return response()->json(['error' => 'Unable to fetch coordinates for the location'], 500);
+        }
+
+        $geoData = $geoResponse->json()[0];
+        $lat = $geoData['lat'];
+        $lon = $geoData['lon'];
+
+        // Fetch weather data from OpenWeatherMap Weather API using coordinates
+        $weatherResponse = Http::withOptions(['verify' => false])->get('https://api.openweathermap.org/data/2.5/weather', [
+            'lat' => $lat,
+            'lon' => $lon,
             'appid' => $this->apiKey,
             'units' => 'metric'
         ]);
 
-        if ($response->failed()) {
+        if ($weatherResponse->failed()) {
             return response()->json(['error' => 'Unable to fetch weather data'], 500);
         }
 
-        $weatherData = $response->json();
-        
+        $weatherData = $weatherResponse->json();
+
         // Store the weather data in the database
         Weather::create([
             'location' => $location,
