@@ -2,6 +2,7 @@ import Image from "next/image";
 import Sidebar from "./components/sidebar";
 import Main from "./components/maincontent";
 import Search from "./components/search";
+import Switch from "./components/switch";
 
 export default function Home() {
   return (
@@ -13,9 +14,10 @@ export default function Home() {
           <Sidebar />
         </aside>
       </div>
-      <main className="flex w-full flex-col p-4">
-        <div>
+      <main className=" w-full">
+        <div className="w-full flex" >
           <Search />
+          <Switch />
         </div>
         <Main />
       </main>

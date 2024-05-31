@@ -2,7 +2,7 @@
 
 function Main() {
     return (
-        <>
+        <div className="flex flex-col p-4">
             <div className="w-fit">
                 <label htmlFor="sidebar-mobile-fixed" className="btn-primary btn sm:hidden">Open Sidebar</label>
             </div>
@@ -20,7 +20,7 @@ function Main() {
                 <div className="flex h-40 w-full items-center justify-center border-2 border-dashed border-border bg-gray-1">+</div>
                 <div className="flex h-40 w-full items-center justify-center border-2 border-dashed border-border bg-gray-1">+</div>
             </div>
-        </>
+        </div>
     );
 }
 
