@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { WeatherData } from './types'; // Adjust the import path as necessary
+import { WeatherData } from '../../../types/types';
 
 function Search() {
     const [location, setLocation] = useState<string>('');
