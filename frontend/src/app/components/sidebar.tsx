@@ -2,7 +2,7 @@
 
 function Sidebar() {
     return (
-        <aside className="sidebar sidebar-fixed-left sidebar-mobile h-full justify-start max-sm:fixed max-sm:-translate-x-full">
+        <div className="sidebar sidebar-fixed-left sidebar-mobile h-full justify-start max-sm:fixed max-sm:-translate-x-full">
             <section className="sidebar-title items-center p-4">
                 <svg fill="none" height="42" viewBox="0 0 32 32" width="42" xmlns="http://www.w3.org/2000/svg">
                     <rect height="100%" rx="16" width="100%"></rect>
@@ -169,7 +169,7 @@ function Sidebar() {
                     </div>
                 </div>
             </section>
-        </aside>
+        </div>
     );
 }
 
