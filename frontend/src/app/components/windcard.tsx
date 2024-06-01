@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { WeatherData } from '../../../types/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCompass } from '@fortawesome/free-regular-svg-icons/faCompass';
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface WindCardProps {
     weatherData: WeatherData | null;
@@ -15,8 +18,8 @@ const WindCard: React.FC<WindCardProps> = ({ weatherData }) => {
     const { wind } = weatherData;
 
     const getCardinalDirection = (angle: number) => {
-        const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-        const index = Math.round(angle / 45) % 8;
+        const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+        const index = Math.round(angle / 22.5) % 16;
         return directions[index];
     };
 
@@ -27,12 +30,14 @@ const WindCard: React.FC<WindCardProps> = ({ weatherData }) => {
             <div className="card">
                 <div className="card-body">
                     <h2 className="card-header">Wind Status</h2>
-                    <p className="text-content2">
+                    <p className="text-content">
                         <span>{windSpeedKmh.toFixed(2)} km/h</span><br />
-                        <span>{getCardinalDirection(wind.deg)} ({wind.deg}°)</span>
                     </p>
                     <div className="card-footer">
-                        <span>Wind Icon</span>
+                    <span className='flex gap-2'>
+                    <FontAwesomeIcon icon={faCompass as IconProp} />
+                      {getCardinalDirection(wind.deg)} ({wind.deg}°)
+                    </span>
                     </div>
                 </div>
             </div>
