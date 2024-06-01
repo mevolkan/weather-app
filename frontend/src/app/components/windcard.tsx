@@ -26,10 +26,10 @@ const WindCard: React.FC<WindCardProps> = ({ weatherData }) => {
         <div className="flex h-40 w-full items-center justify-center">
             <div className="card">
                 <div className="card-body">
-                    <h2 className="card-header">Wind</h2>
+                    <h2 className="card-header">Wind Status</h2>
                     <p className="text-content2">
-                        <span>Speed: {windSpeedKmh.toFixed(2)} km/h</span><br />
-                        <span>Direction: {getCardinalDirection(wind.deg)} ({wind.deg}°)</span>
+                        <span>{windSpeedKmh.toFixed(2)} km/h</span><br />
+                        <span>{getCardinalDirection(wind.deg)} ({wind.deg}°)</span>
                     </p>
                     <div className="card-footer">
                         <span>Wind Icon</span>
