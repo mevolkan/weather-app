@@ -21,7 +21,7 @@ const Search: React.FC<SearchProps> = ({ fetchWeatherData }) => {
         <form onSubmit={handleSubmit} className="flex w-full max-w-lg flex-row">
             <div className="form-control flex-grow">
                 <input
-                    type="text"
+                    type="search"
                     className="input input-lg max-w-full"
                     placeholder="Search"
                     value={location}

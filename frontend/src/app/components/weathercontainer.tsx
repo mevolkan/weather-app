@@ -34,7 +34,7 @@ const WeatherContainer: React.FC = () => {
     return (
         <> <div className="flex flex-row sm:gap-10" >
             <div className="sm:w-full sm:max-w-[18rem]">
-                <input type="checkbox" id="sidebar-mobile-fixed" className="sidebar-state" />
+                <input  aria-label="mobile sidebar" type="checkbox" id="sidebar-mobile-fixed" className="sidebar-state" />
                 <label htmlFor="sidebar-mobile-fixed" className="sidebar-overlay" />
                 <aside className="sidebar sidebar-fixed-left sidebar-mobile h-full justify-start max-sm:fixed max-sm:-translate-x-full">
                     <Sidebar weatherData={weatherData} />
