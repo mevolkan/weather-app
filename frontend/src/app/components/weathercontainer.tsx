@@ -74,7 +74,7 @@ const WeatherContainer: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex flex-row sm:gap-10">
+        <div className="flex flex-row sm:gap-10 ">
             <div className="sm:w-full sm:max-w-[18rem]">
                 <input aria-label="mobile sidebar" type="checkbox" id="sidebar-mobile-fixed" className="sidebar-state" />
                 <label htmlFor="sidebar-mobile-fixed" className="sidebar-overlay" />
@@ -82,7 +82,7 @@ const WeatherContainer: React.FC = () => {
                     <Sidebar weatherData={weatherData} />
                 </aside>
             </div>
-            <main className="w-full">
+            <main className="w-full ">
                 <div className="w-full gap-1 flex p-4">
                     <div className="w-fit">
                         <label htmlFor="sidebar-mobile-fixed" className="btn-primary btn sm:hidden">
@@ -95,16 +95,16 @@ const WeatherContainer: React.FC = () => {
                     <Switch />
                 </div>
                 <div className="flex flex-col p-4">
-            <div className="my-4 grid grid-cols-3 gap-4">
-                <ForecastCard />
-                <ForecastCard />
-                <ForecastCard />
-            </div>
-            <div className="my-4 grid w-full grid-cols-2 gap-2">
-            <WindCard weatherData={weatherData} />
-            <HumidityCard humidity={weatherData?.main.humidity || 0} />
-            </div>
-        </div>
+                    <div className="my-4 grid grid-cols-3 gap-4">
+                        <ForecastCard />
+                        <ForecastCard />
+                        <ForecastCard />
+                    </div>
+                    <div className="my-4 grid w-full grid-cols-2 gap-2">
+                        <WindCard weatherData={weatherData} />
+                        <HumidityCard humidity={weatherData?.main.humidity || 0} />
+                    </div>
+                </div>
                 {error && <p>{error}</p>}
             </main>
         </div>
