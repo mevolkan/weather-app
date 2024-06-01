@@ -102,7 +102,7 @@ const WeatherContainer: React.FC = () => {
             </div>
             <div className="my-4 grid w-full grid-cols-2 gap-2">
             <WindCard weatherData={weatherData} />
-                <HumidityCard />
+            <HumidityCard humidity={weatherData?.main.humidity || 0} />
             </div>
         </div>
                 {error && <p>{error}</p>}
