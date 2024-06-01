@@ -65,4 +65,26 @@ class WeatherController extends Controller
 
         return response()->json($weatherData);
         }
+
+    public function getWeatherForecast(Request $request)
+        {
+        $lat = $request->input('lat');
+        $lon = $request->input('lon');
+        $apiKey = config('services.openweathermap.key');
+
+        $response = Http::get('https://api.openweathermap.org/data/2.5/forecast/daily', [
+            'lat' => $lat,
+            'lon' => $lon,
+            'cnt' => 5, // Number of forecast days
+            'appid' => $apiKey,
+            'units' => 'metric'
+        ]);
+
+        if ($response->failed()) {
+            return response()->json(['error' => 'Unable to fetch weather forecast data'], 500);
+            }
+
+        $forecastData = $response->json();
+        return response()->json($forecastData);
+        }
     }
