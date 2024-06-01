@@ -12,3 +12,7 @@ export interface WeatherData {
     main: Main;
     weather: Weather[];
 }
+
+export interface SidebarProps {
+    weatherData: WeatherData | null;
+}

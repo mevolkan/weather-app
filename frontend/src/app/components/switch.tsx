@@ -16,7 +16,6 @@ function Switch() {
                 </label>
             </li>
         </ul>
-
     );
 }
 
