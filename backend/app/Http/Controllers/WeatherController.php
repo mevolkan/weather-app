@@ -7,16 +7,18 @@ use App\Models\Weather;
 use Illuminate\Support\Facades\Http;
 
 class WeatherController extends Controller
-{
+    {
     private $apiKey;
 
     public function __construct()
-    {
+        {
         $this->apiKey = config('services.openweathermap.key');
-    }
+        }
 
     public function getWeather(Request $request)
-    {
+        {
+        $location = strip_tags($request->input('location'));
+        $lat = strip_tags($request->input('lat'));
         $location = strip_tags($request->input('location'));
 
         // Check if the location is already in the database
@@ -24,7 +26,7 @@ class WeatherController extends Controller
 
         if ($weather) {
             return response()->json(json_decode($weather->data));
-        }
+            }
 
         // Fetch coordinates from OpenWeatherMap Geocoding API
         $geoResponse = Http::withOptions(['verify' => false])->get('http://api.openweathermap.org/geo/1.0/direct', [
@@ -35,7 +37,7 @@ class WeatherController extends Controller
 
         if ($geoResponse->failed() || empty($geoResponse->json())) {
             return response()->json(['error' => 'Unable to fetch coordinates for the location'], 500);
-        }
+            }
 
         $geoData = $geoResponse->json()[0];
         $lat = $geoData['lat'];
@@ -51,7 +53,7 @@ class WeatherController extends Controller
 
         if ($weatherResponse->failed()) {
             return response()->json(['error' => 'Unable to fetch weather data'], 500);
-        }
+            }
 
         $weatherData = $weatherResponse->json();
 
@@ -62,5 +64,5 @@ class WeatherController extends Controller
         ]);
 
         return response()->json($weatherData);
+        }
     }
-}
