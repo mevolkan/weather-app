@@ -18,8 +18,8 @@ class WeatherController extends Controller
     public function getWeather(Request $request)
         {
         $location = strip_tags($request->input('location'));
-        $lat = strip_tags($request->input('lat'));
-        $location = strip_tags($request->input('location'));
+        // $lat = strip_tags($request->input('lat'));
+        // $long = strip_tags($request->input('long'));
 
         // Check if the location is already in the database
         $weather = Weather::where('location', $location)->first();
@@ -66,25 +66,39 @@ class WeatherController extends Controller
         return response()->json($weatherData);
         }
 
-    public function getWeatherForecast(Request $request)
+        public function getWeatherForecast(Request $request)
         {
-        $lat = $request->input('lat');
-        $lon = $request->input('lon');
-        $apiKey = config('services.openweathermap.key');
-
-        $response = Http::get('https://api.openweathermap.org/data/2.5/forecast/daily', [
-            'lat' => $lat,
-            'lon' => $lon,
-            'cnt' => 5, // Number of forecast days
-            'appid' => $apiKey,
-            'units' => 'metric'
-        ]);
-
-        if ($response->failed()) {
-            return response()->json(['error' => 'Unable to fetch weather forecast data'], 500);
+            $location = strip_tags($request->input('location'));
+        
+              // Fetch coordinates from OpenWeatherMap Geocoding API
+              $geoResponse = Http::withOptions(['verify' => false])->get('http://api.openweathermap.org/geo/1.0/direct', [
+                'q' => $location,
+                'limit' => 1,
+                'appid' => $this->apiKey
+            ]);
+    
+            if ($geoResponse->failed() || empty($geoResponse->json())) {
+                return response()->json(['error' => 'Unable to fetch coordinates for the location'], 500);
+                }
+    
+            $geoData = $geoResponse->json()[0];
+            $lat = $geoData['lat'];
+            $lon = $geoData['lon'];
+        
+            $response = Http::withOptions(['verify' => false])->get('https://api.openweathermap.org/data/2.5/forecast', [
+                'lat' => $lat,
+                'lon' => $lon,
+                'cnt' => 10,
+                'appid' => $this->apiKey,
+            ]);
+        
+            if ($response->failed()) {
+                return response()->json(['error' => 'Unable to fetch weather forecast data'], 500);
             }
-
-        $forecastData = $response->json();
-        return response()->json($forecastData);
+        
+            $forecastData = $response->json();
+            return response()->json($forecastData);
+            // return response()->json($response);
         }
+        
     }
