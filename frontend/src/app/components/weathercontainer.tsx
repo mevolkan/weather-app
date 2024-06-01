@@ -75,7 +75,7 @@ const WeatherContainer: React.FC = () => {
             <div className="sm:w-full sm:max-w-[18rem]">
                 <input aria-label="mobile sidebar" type="checkbox" id="sidebar-mobile-fixed" className="sidebar-state" />
                 <label htmlFor="sidebar-mobile-fixed" className="sidebar-overlay" />
-                <aside className="sidebar sidebar-fixed-left sidebar-mobile h-full justify-start max-sm:fixed max-sm:-translate-x-full">
+                <aside className="sidebar sidebar-fixed-left sidebar-mobile h-full justify-center max-sm:fixed max-sm:-translate-x-full">
                     <Sidebar weatherData={weatherData} />
                 </aside>
             </div>
