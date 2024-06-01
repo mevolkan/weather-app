@@ -6,6 +6,9 @@ import Sidebar from './sidebar';
 import Main from './maincontent';
 import Search from './search';
 import Switch from './switch';
+import ForecastCard from './forecastcard';
+import WindCard from './windcard';
+import HumidityCard from './humiditycard';
 
 const WeatherContainer: React.FC = () => {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
@@ -91,7 +94,17 @@ const WeatherContainer: React.FC = () => {
                     <Search fetchWeatherData={fetchWeatherData} />
                     <Switch />
                 </div>
-                <Main />
+                <div className="flex flex-col p-4">
+            <div className="my-4 grid grid-cols-3 gap-4">
+                <ForecastCard />
+                <ForecastCard />
+                <ForecastCard />
+            </div>
+            <div className="my-4 grid w-full grid-cols-2 gap-2">
+            <WindCard weatherData={weatherData} />
+                <HumidityCard />
+            </div>
+        </div>
                 {error && <p>{error}</p>}
             </main>
         </div>

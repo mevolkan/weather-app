@@ -2,10 +2,10 @@ import React from 'react';
 import { WeatherData } from '../../../types/types';
 import Image from 'next/image'
 
-interface SidebarProps {
+interface WeatherProps {
     weatherData: WeatherData | null;
 }
-const Sidebar: React.FC<SidebarProps> = ({ weatherData }) => {
+const Sidebar: React.FC<WeatherProps> = ({ weatherData }) => {
     return (
         <>
             {weatherData && (

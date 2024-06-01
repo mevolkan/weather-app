@@ -16,11 +16,12 @@ export interface Main {
 }
 
 export interface WeatherData {
+    wind: any;
     name: string;
     main: Main;
     weather: Weather[];
 }
 
-export interface SidebarProps {
+export interface WeatherProps {
     weatherData: WeatherData | null;
 }
