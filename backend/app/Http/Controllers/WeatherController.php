@@ -17,7 +17,7 @@ class WeatherController extends Controller
 
     public function getWeather(Request $request)
     {
-        $location = $request->input('location');
+        $location = strip_tags($request->input('location'));
 
         // Check if the location is already in the database
         $weather = Weather::where('location', $location)->first();

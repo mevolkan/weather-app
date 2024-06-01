@@ -8,7 +8,7 @@ function WindCard() {
                     <h2 className="card-header">21 May</h2>
                     <p className="text-content2">Icon</p>
                     <div className="card-footer">
-                        frontend/src/app/components/sidebar.tsx
+                        Test
                     </div>
                 </div>
             </div>
