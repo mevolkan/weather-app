@@ -38,7 +38,7 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ date, icon, description, mi
                     />
                 </div>
                 <div className="card-footer">
-                    {description}
+
                     <span>{mintemp}</span> - <span>{maxtemp}</span>
                 </div>
             </div>

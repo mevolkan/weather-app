@@ -133,11 +133,9 @@ const WeatherContainer: React.FC = () => {
             </div>
             <main className="w-full ">
                 <div className="w-full gap-1 flex p-4 justify-between">
-                    <>
                         <label htmlFor="sidebar-mobile-fixed" className="p-4 sm:hidden">
                             <FontAwesomeIcon icon={faBars as IconProp} />
                         </label>
-                    </>
                     <Search fetchWeatherData={fetchWeatherData} />
                     <Switch />
                 </div>
