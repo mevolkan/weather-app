@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { WeatherData } from '../../../types/types';
+import { Forecast, WeatherData } from '../../../types/types';
 import Sidebar from './sidebar';
 import Search from './search';
 import Switch from './switch';
@@ -11,7 +11,7 @@ import HumidityCard from './humiditycard';
 
 const WeatherContainer: React.FC = () => {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-    const [forecastData, setForecastData] = useState<ForecastData | null>(null);
+    const [forecastData, setForecastData] = useState<Forecast[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const fetchWeatherData = async (location: string) => {
@@ -55,20 +55,34 @@ const WeatherContainer: React.FC = () => {
     };
 
     const fetchForecastData = async (location: string) => {
-        setError(null);
-        setWeatherData(null);
-
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}?forecast=${location}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?location=${location}`, {
                 method: 'GET'
             });
 
             if (!response.ok) {
-                throw new Error('Unable to fetch weather data');
+                throw new Error('Unable to fetch forecast data');
             }
 
-            const data: WeatherData = await response.json();
-            setWeatherData(data);
+            const data: ForecastData = await response.json();
+            setForecastData(data.list); // Assuming the API returns an array of forecasts in 'list'
+        } catch (err: any) {
+            setError(err.message);
+        }
+    };
+
+    const fetchForecastDataByCoords = async (lat: number, lon: number) => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?lat=${lat}&lon=${lon}`, {
+                method: 'GET'
+            });
+
+            if (!response.ok) {
+                throw new Error('Unable to fetch forecast data');
+            }
+
+            const data: ForecastData = await response.json();
+            setForecastData(data.list); // Assuming the API returns an array of forecasts in 'list'
         } catch (err: any) {
             setError(err.message);
         }
@@ -116,8 +130,13 @@ const WeatherContainer: React.FC = () => {
                 </div>
                 <div className="flex flex-col p-4">
                     <div className="my-4 grid grid-cols-3 gap-4">
-                    {forecastData && forecastData.slice(0, 3).map((forecast, index) => (
-                            <ForecastCard key={index} date={forecast.dt} icon={forecast.weather[0].icon} description={forecast.weather[0].description} />
+                    {forecastData && forecastData.slice(0, 3).map((forecast: Forecast, index: number) => (
+                            <ForecastCard 
+                                key={index} 
+                                date={forecast.dt} 
+                                icon={forecast.weather[0].icon} 
+                                description={forecast.weather[0].description} 
+                            />
                         ))}
                     </div>
                     <div className="my-4 grid w-full grid-cols-2 gap-2">

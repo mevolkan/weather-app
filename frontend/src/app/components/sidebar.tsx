@@ -17,7 +17,7 @@ const Sidebar: React.FC<WeatherProps> = ({ weatherData }) => {
                         alt={weatherData.weather[0].description}
                     />
                     <p>{weatherData.main.temp}°C</p>
-                    <p>{weatherData.weather[0].main}</p>
+                    <p>{weatherData.dt}</p>
                     <p>{weatherData.weather[0].description}</p>
                     <p>{weatherData.name}</p>
                 </div>

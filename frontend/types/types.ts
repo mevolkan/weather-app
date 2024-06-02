@@ -13,15 +13,41 @@ export interface Icon {
 
 export interface Main {
     temp: number;
+    humidity: number; 
 }
 
 export interface WeatherData {
-    wind: any;
+    dt: ReactNode;
+    wind: {
+        speed: number;
+    };
     name: string;
     main: Main;
-    weather: Weather[];
+    weather: [
+        {
+            description: string;
+            icon: string;
+        }
+    ];
 }
 
 export interface WeatherProps {
     weatherData: WeatherData | null;
+}
+
+export interface Forecast {
+    dt: number;
+    temp: {
+        day: number;
+    };
+    weather: [
+        {
+            description: string;
+            icon: string;
+        }
+    ];
+}
+
+export interface ForecastData {
+    list: Forecast[];
 }
