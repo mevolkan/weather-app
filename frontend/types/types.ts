@@ -19,6 +19,7 @@ export interface Main {
 export interface WeatherData {
     dt: ReactNode;
     wind: {
+        deg: number;
         speed: number;
     };
     name: string;

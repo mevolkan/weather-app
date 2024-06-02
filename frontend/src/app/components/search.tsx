@@ -34,7 +34,7 @@ const Search: React.FC<SearchProps> = ({ fetchWeatherData }) => {
                 </span>
             </div>
             <div className="form-control">
-                <button type="submit" className="btn btn-primary w-full px-5 py-3">Go</button>
+                <button type="submit" className="btn btn-primary p-4">Go</button>
             </div>
         </form>
     );
