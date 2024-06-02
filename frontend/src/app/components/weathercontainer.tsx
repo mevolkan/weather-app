@@ -100,7 +100,27 @@ const WeatherContainer: React.FC = () => {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-      };
+        autoplay: true,
+        autoplaySpeed: 5000,
+        cssEase: "linear",
+        responsive: [
+            {
+              breakpoint: 900,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+    };
 
     return (
         <div className="flex flex-row sm:gap-10 ">
@@ -123,17 +143,17 @@ const WeatherContainer: React.FC = () => {
                 </div>
                 <div className="flex flex-col p-4">
                     <div className="my-4 grid grid-cols-1 gap-4">
-                    <Slider {...settings}>
-                        {forecastData && forecastData.map((forecast: Forecast, index: number) => (
-                            <ForecastCard
-                                key={index}
-                                date={forecast.dt}
-                                icon={forecast.weather[0].icon}
-                                mintemp={forecast.main.temp_min}
-                                maxtemp={forecast.main.temp_max}
-                                description={forecast.main.description}
-                            />
-                        ))}
+                        <Slider {...settings}>
+                            {forecastData && forecastData.map((forecast: Forecast, index: number) => (
+                                <ForecastCard
+                                    key={index}
+                                    date={forecast.dt}
+                                    icon={forecast.weather[0].icon}
+                                    mintemp={forecast.main.temp_min}
+                                    maxtemp={forecast.main.temp_max}
+                                    description={forecast.main.description}
+                                />
+                            ))}
                         </Slider>
                     </div>
                     <div className="my-4 grid w-full grid-cols-2 gap-2">
