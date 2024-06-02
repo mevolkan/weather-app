@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Forecast, WeatherData } from '../../../types/types';
+import { Forecast, ForecastData, WeatherData } from '../../../types/types';
 import Sidebar from './sidebar';
 import Search from './search';
 import Switch from './switch';
@@ -20,18 +20,31 @@ const WeatherContainer: React.FC = () => {
     const fetchWeatherData = async (location: string) => {
         setError(null);
         setWeatherData(null);
+        setForecastData(null);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}?location=${location}`, {
+            const weatherResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/weather?location=${location}`, {
                 method: 'GET'
             });
 
-            if (!response.ok) {
+            if (!weatherResponse.ok) {
                 throw new Error('Unable to fetch weather data');
             }
 
-            const data: WeatherData = await response.json();
-            setWeatherData(data);
+            const weatherData: WeatherData = await weatherResponse.json();
+            setWeatherData(weatherData);
+
+            const forecastResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?location=${location}`, {
+                method: 'GET'
+            });
+
+            if (!forecastResponse.ok) {
+                throw new Error('Unable to fetch forecast data');
+            }
+
+            const forecastData = await forecastResponse.json();
+            setForecastData(forecastData.list);
+
         } catch (err: any) {
             setError(err.message);
         }
@@ -57,39 +70,7 @@ const WeatherContainer: React.FC = () => {
         }
     };
 
-    const fetchForecastData = async (location: string) => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?location=${location}`, {
-                method: 'GET'
-            });
 
-            if (!response.ok) {
-                throw new Error('Unable to fetch forecast data');
-            }
-
-            const data: ForecastData = await response.json();
-            setForecastData(data.list); // Assuming the API returns an array of forecasts in 'list'
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
-
-    const fetchForecastDataByCoords = async (lat: number, lon: number) => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?lat=${lat}&lon=${lon}`, {
-                method: 'GET'
-            });
-
-            if (!response.ok) {
-                throw new Error('Unable to fetch forecast data');
-            }
-
-            const data: ForecastData = await response.json();
-            setForecastData(data.list); // Assuming the API returns an array of forecasts in 'list'
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -123,7 +104,7 @@ const WeatherContainer: React.FC = () => {
                 <div className="w-full gap-1 flex p-4 justify-between">
                     <>
                         <label htmlFor="sidebar-mobile-fixed" className="p-4 sm:hidden">
-                        <FontAwesomeIcon icon={faBars as IconProp} />
+                            <FontAwesomeIcon icon={faBars as IconProp} />
                         </label>
                     </>
                     <Search fetchWeatherData={fetchWeatherData} />
@@ -131,12 +112,14 @@ const WeatherContainer: React.FC = () => {
                 </div>
                 <div className="flex flex-col p-4">
                     <div className="my-4 grid grid-cols-3 gap-4">
-                    {forecastData && forecastData.slice(0, 3).map((forecast: Forecast, index: number) => (
-                            <ForecastCard 
-                                key={index} 
-                                date={forecast.dt} 
-                                icon={forecast.weather[0].icon} 
-                                description={forecast.weather[0].description} 
+                        {forecastData && forecastData.map((forecast: Forecast, index: number) => (
+                            <ForecastCard
+                                key={index}
+                                date={forecast.dt}
+                                icon={forecast.weather[0].icon}
+                                mintemp={forecast.main.temp_min}
+                                maxtemp={forecast.main.temp_max}
+                                description={forecast.main.description}
                             />
                         ))}
                     </div>
