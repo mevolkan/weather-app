@@ -11,6 +11,9 @@ import HumidityCard from './humiditycard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const WeatherContainer: React.FC = () => {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
@@ -91,6 +94,14 @@ const WeatherContainer: React.FC = () => {
         }
     }, []);
 
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      };
+
     return (
         <div className="flex flex-row sm:gap-10 ">
             <div className="sm:w-full sm:max-w-[18rem]">
@@ -111,7 +122,8 @@ const WeatherContainer: React.FC = () => {
                     <Switch />
                 </div>
                 <div className="flex flex-col p-4">
-                    <div className="my-4 grid grid-cols-3 gap-4">
+                    <div className="my-4 grid grid-cols-1 gap-4">
+                    <Slider {...settings}>
                         {forecastData && forecastData.map((forecast: Forecast, index: number) => (
                             <ForecastCard
                                 key={index}
@@ -122,6 +134,7 @@ const WeatherContainer: React.FC = () => {
                                 description={forecast.main.description}
                             />
                         ))}
+                        </Slider>
                     </div>
                     <div className="my-4 grid w-full grid-cols-2 gap-2">
                         <WindCard weatherData={weatherData} />
