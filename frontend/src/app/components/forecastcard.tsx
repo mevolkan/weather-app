@@ -18,10 +18,17 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ date, icon, description, mi
         year: 'numeric'
     });
 
+    const formattedTime = new Date(date * 1000).toLocaleTimeString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+
     return (
         <div className="card">
             <div className="card-body">
-                <h2 className="card-header">{formattedDate}</h2>
+                {/* <h2 className="card-header">{formattedDate}</h2> */}
+                <p className="card-header">{formattedTime}</p>
                 <div className="text-content">
                 <Image
                         src ={`http://openweathermap.org/img/w/${icon}.png`} 

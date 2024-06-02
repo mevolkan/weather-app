@@ -74,7 +74,8 @@ class WeatherController extends Controller
               $geoResponse = Http::withOptions(['verify' => false])->get('http://api.openweathermap.org/geo/1.0/direct', [
                 'q' => $location,
                 'limit' => 1,
-                'appid' => $this->apiKey
+                'appid' => $this->apiKey,
+                'units' => 'metric'
             ]);
     
             if ($geoResponse->failed() || empty($geoResponse->json())) {
