@@ -59,7 +59,7 @@ const WeatherContainer: React.FC = () => {
         setForecastData(null);
 
         try {
-            const weatherResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/weather/?lat=${lat}&lon=${lon}`, {
+            const weatherResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/weather?lat=${lat}&lon=${lon}`, {
                 method: 'GET'
             });
 
@@ -70,7 +70,7 @@ const WeatherContainer: React.FC = () => {
             const data: WeatherData = await weatherResponse.json();
             setWeatherData(data);
 
-            const forecastResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?location=${location}`, {
+            const forecastResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?lat=${lat}&lon=${lon}`, {
                 method: 'GET'
             });
 
@@ -118,21 +118,21 @@ const WeatherContainer: React.FC = () => {
         cssEase: "linear",
         responsive: [
             {
-              breakpoint: 900,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-              }
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
             },
             {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-              }
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
             }
-          ]
+        ]
     };
 
     return (
@@ -146,9 +146,9 @@ const WeatherContainer: React.FC = () => {
             </div>
             <main className="w-full ">
                 <div className="w-full gap-1 flex p-4 justify-between">
-                        <label htmlFor="sidebar-mobile-fixed" className="p-4 sm:hidden">
-                            <FontAwesomeIcon icon={faBars as IconProp} />
-                        </label>
+                    <label htmlFor="sidebar-mobile-fixed" className="p-4 sm:hidden">
+                        <FontAwesomeIcon icon={faBars as IconProp} />
+                    </label>
                     <Search fetchWeatherData={fetchWeatherData} />
                     <Switch />
                 </div>
