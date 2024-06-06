@@ -76,8 +76,6 @@ class WeatherController extends Controller
             $lon = $geoData['lon'];
         }
 
-
-
         $weatherData = $this->fetchWeatherData($lat, $lon, 'https://api.openweathermap.org/data/2.5/weather');
 
         if (!$weatherData) {
@@ -97,14 +95,20 @@ class WeatherController extends Controller
     {
         $location = strip_tags($request->input('location'));
 
-        $geoData = $this->getCoordinates($location);
+        if ($this->isNullOrEmptyString($location)) {
+            // return response()->json(['error' => 'Location is required'], 400);
+            $lat = strip_tags($request->input('lat'));
+            $lon = strip_tags($request->input('lon'));
+        } else {
+            $geoData = $this->getCoordinates($location);
 
-        if (!$geoData) {
-            return response()->json(['error' => 'Unable to fetch coordinates for the location'], 500);
+            if (!$geoData) {
+                return response()->json(['error' => 'Unable to fetch coordinates for the location'], 500);
+            }
+
+            $lat = $geoData['lat'];
+            $lon = $geoData['lon'];
         }
-
-        $lat = $geoData['lat'];
-        $lon = $geoData['lon'];
 
         $forecastData = $this->fetchWeatherData($lat, $lon, 'https://api.openweathermap.org/data/2.5/forecast');
 
