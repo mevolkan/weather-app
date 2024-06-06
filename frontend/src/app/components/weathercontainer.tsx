@@ -56,18 +56,31 @@ const WeatherContainer: React.FC = () => {
     const fetchWeatherDataByCoords = async (lat: number, lon: number) => {
         setError(null);
         setWeatherData(null);
+        setForecastData(null);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}?lat=${lat}&lon=${lon}`, {
+            const weatherResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/weather/?lat=${lat}&lon=${lon}`, {
                 method: 'GET'
             });
 
-            if (!response.ok) {
+            if (!weatherResponse.ok) {
                 throw new Error('Unable to fetch weather data');
             }
 
-            const data: WeatherData = await response.json();
+            const data: WeatherData = await weatherResponse.json();
             setWeatherData(data);
+
+            const forecastResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/forecast?location=${location}`, {
+                method: 'GET'
+            });
+
+            if (!forecastResponse.ok) {
+                throw new Error('Unable to fetch forecast data');
+            }
+
+            const forecastData = await forecastResponse.json();
+            setForecastData(forecastData.list);
+
         } catch (err: any) {
             setError(err.message);
         }
