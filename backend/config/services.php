@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Env;
+
 return [
 
     /*
@@ -36,7 +38,7 @@ return [
     ],
     
     'openweathermap' => [
-        'key' => env('OPENWEATHERMAP_KEY'),
+        'key' => Env::getOrFail('OPENWEATHERMAP_KEY'),
     ],
 
 ];
